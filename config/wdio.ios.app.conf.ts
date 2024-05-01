@@ -1,15 +1,13 @@
 import { join } from 'node:path';
 import { config as baseConfig } from './wdio.shared.local.appium.conf.js';
 
-const isGhActions = process.env.GITHUB_ACTION;
-
 export const config: WebdriverIO.Config = {
     ...baseConfig,
 
     // ============
     // Specs
     // ============
-    specs: ['../tests/specs/**/app.login.spec.ts'],
+    specs: ['../tests/specs/**/completeCheckout.spec.ts'],
 
     // ============
     // Capabilities
@@ -21,7 +19,7 @@ export const config: WebdriverIO.Config = {
             // The defaults you need to have in your config
             platformName: 'iOS',
             'wdio:maxInstances': 1,
-            'appium:deviceName': 'iPhone 15',
+            'appium:deviceName': 'iPhone SE (3rd generation)',
             //
             // NOTE: Change this version according to the Simulator Version you have created on your local machine
             'appium:platformVersion': '17.4',

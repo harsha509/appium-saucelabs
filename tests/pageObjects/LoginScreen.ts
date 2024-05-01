@@ -26,9 +26,6 @@ class LoginScreen extends AppScreen {
     get login() {
         return $(SELECTORS.SCREEN)
     }
-
-
-
 }
 
 export default new LoginScreen();
