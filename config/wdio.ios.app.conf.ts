@@ -7,7 +7,7 @@ export const config: WebdriverIO.Config = {
     // ============
     // Specs
     // ============
-    specs: ['../tests/specs/**/completeCheckout.spec.ts'],
+    specs: ['../tests/specs/**/browserSaucelabs.spec.ts'],
 
     // ============
     // Capabilities
@@ -20,6 +20,8 @@ export const config: WebdriverIO.Config = {
             platformName: 'iOS',
             'wdio:maxInstances': 1,
             'appium:deviceName': 'iPhone SE (3rd generation)',
+            // 'appium:autoWebview': true,
+            'appium:fullContextList': true,
             //
             // NOTE: Change this version according to the Simulator Version you have created on your local machine
             'appium:platformVersion': '17.4',
@@ -34,7 +36,7 @@ export const config: WebdriverIO.Config = {
             ),
             'appium:newCommandTimeout': 240,
             // This is needed to wait for the webview context to become available
-            'appium:webviewConnectTimeout': 5000,
+            // 'appium:webviewConnectTimeout': 5000,
         }
     ]
 };
