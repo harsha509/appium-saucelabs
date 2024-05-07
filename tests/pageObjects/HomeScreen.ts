@@ -1,4 +1,5 @@
 import AppScreen from './AppScreen.js';
+import CONSTANTS from '../../testData/Constants.json';
 
 const SELECTORS = {
     SCREEN: '~test-Menu',
@@ -11,7 +12,9 @@ class HomeScreen extends AppScreen {
 
     async waitForMenuButton ():Promise<boolean|void> {
         return $('~test-Menu').waitForDisplayed({
-            timeout: 20000,
+            timeout: CONSTANTS.LONG_TIMEOUT,
+            interval: CONSTANTS.SHORT_POLL,
+            timeoutMsg: `Unable to locate menu button under ${CONSTANTS.LONG_TIMEOUT}`
         });
     }
 
@@ -46,6 +49,53 @@ class HomeScreen extends AppScreen {
     get webView() {
         return $(`~test-WEBVIEW`);
     }
+
+    async clickOnMenuBtn() {
+        await this.menuBtn.waitForClickable({
+            timeout: CONSTANTS.SHORT_TIMEOUT,
+            interval: CONSTANTS.SHORT_POLL,
+            timeoutMsg: `${this.menuBtn} is not clickable under ${CONSTANTS.SHORT_TIMEOUT}`
+        });
+        await this.menuBtn.click();
+    }
+
+    async clickOnWebView() {
+        await this.webView.waitForClickable({
+            timeout: CONSTANTS.SHORT_TIMEOUT,
+            interval: CONSTANTS.SHORT_POLL,
+            timeoutMsg: `${this.webView} is not clickable under ${CONSTANTS.SHORT_TIMEOUT}`
+        });
+        await this.webView.click();
+    }
+
+    async clickOnAllItems() {
+        await this.allItems.waitForClickable({
+            timeout: CONSTANTS.SHORT_TIMEOUT,
+            interval: CONSTANTS.SHORT_POLL,
+            timeoutMsg: `${this.allItems} is not clickable under ${CONSTANTS.SHORT_TIMEOUT}`
+        });
+        await this.allItems.click();
+    }
+
+
+    async clickOnFilterIcon() {
+        await this.filterIcon.waitForClickable({
+            timeout: CONSTANTS.SHORT_TIMEOUT,
+            interval: CONSTANTS.SHORT_POLL,
+            timeoutMsg: `${this.filterIcon} is not clickable under ${CONSTANTS.SHORT_TIMEOUT}`
+        });
+        await this.filterIcon.click();
+    }
+
+    async clickOnSortA2Z() {
+        await this.sortByAtoZ.waitForClickable({
+            timeout: CONSTANTS.SHORT_TIMEOUT,
+            interval: CONSTANTS.SHORT_POLL,
+            timeoutMsg: `${this.sortByAtoZ} is not clickable under ${CONSTANTS.SHORT_TIMEOUT}`
+        });
+        await this.sortByAtoZ.click();
+    }
+
 }
 
 export default new HomeScreen();

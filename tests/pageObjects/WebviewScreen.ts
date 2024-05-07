@@ -1,4 +1,5 @@
 import WebView from '../helpers/WebView.js';
+import CONSTANTS from '../../testData/Constants.json';
 
 class WebViewScreen extends WebView {
     /**
@@ -8,7 +9,7 @@ class WebViewScreen extends WebView {
         const selector =  browser.isAndroid ? '*//android.webkit.WebView' : '*//XCUIElementTypeWebView';
 
         return $(selector).waitForDisplayed({
-            timeout: 45000,
+            timeout: CONSTANTS.VERY_LONG_TIMEOUT,
             reverse: !isShown,
         });
     }

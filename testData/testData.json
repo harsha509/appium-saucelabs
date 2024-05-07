@@ -1,0 +1,11 @@
+{
+  "loginUser": "standard_user",
+  "loginPassword": "secret_sauce",
+  "amazonUrl": "https://www.amazon.in",
+  "SauceLabsItem": "Sauce Labs Bike Light",
+  "AmazonSearchInput": "Samsung",
+  "CheckOutFirstName": "Sri",
+  "CheckoutLastName": "Harsha",
+  "CheckoutZipCode": "50085",
+  "CartPrice": "$9.99"
+}

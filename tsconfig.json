@@ -8,6 +8,7 @@
         "noImplicitAny": true,
         "strictPropertyInitialization": true,
         "strictNullChecks": true,
+        "resolveJsonModule": true,
         "types": [
             "node",
             "@wdio/types",

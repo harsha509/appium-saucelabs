@@ -1,3 +1,6 @@
+
+import CONSTANTS from '../../testData/Constants.json';
+
 export default class AppScreen {
     private selector: string;
 
@@ -13,6 +16,9 @@ export default class AppScreen {
     async waitForIsShown (isShown = true): Promise<boolean | void> {
         return $(this.selector).waitForDisplayed({
             reverse: !isShown,
+            timeout: CONSTANTS.MEDIUM_TIMEOUT,
+            interval:CONSTANTS.SHORT_POLL,
+            timeoutMsg: `Unable to find ${this.selector}, waited for ${CONSTANTS.MEDIUM_TIMEOUT} with poll ${CONSTANTS.SHORT_POLL}`
         });
     }
 }

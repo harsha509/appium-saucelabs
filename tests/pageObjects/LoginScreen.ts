@@ -1,4 +1,5 @@
 import AppScreen from './AppScreen.js';
+import CONSTANTS from "../../testData/Constants.json";
 
 const SELECTORS = {
     SCREEN: '~test-LOGIN',
@@ -11,7 +12,9 @@ class LoginScreen extends AppScreen {
 
     async waitForLoginButton ():Promise<boolean|void> {
         return $('~test-LOGIN').waitForDisplayed({
-            timeout: 20000,
+            timeout: CONSTANTS.LONG_TIMEOUT,
+            interval: CONSTANTS.SHORT_POLL,
+            timeoutMsg: `Unable to locate login button under ${CONSTANTS.LONG_TIMEOUT}`
         });
     }
 

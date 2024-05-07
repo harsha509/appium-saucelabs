@@ -3,8 +3,8 @@ import HomeScreen from '../pageObjects/HomeScreen.js';
 import CartScreen from '../pageObjects/CartScreen.js';
 import CheckoutScreen from '../pageObjects/CheckoutScreen.js';
 import Gestures, { DIRECTIONS } from '../helpers/Gestures.js';
-
-const price = '$9.99';
+import testData from "../../testData/testData.json";
+import CONSTANTS from "../../testData/Constants.json";
 
 describe('Login into saucelabs app, select item and complete checkout', () => {
     before(async () => {
@@ -13,18 +13,25 @@ describe('Login into saucelabs app, select item and complete checkout', () => {
     });
 
     it('should be able to login', async function() {
-        await LoginScreen.inputUserName.setValue("standard_user");
-        await LoginScreen.inputPassword.setValue("secret_sauce");
+        await LoginScreen.inputUserName.setValue(testData.loginUser);
+        await LoginScreen.inputPassword.setValue(testData.loginPassword);
         await LoginScreen.login.click();
         await HomeScreen.waitForMenuButton();
-        expect(HomeScreen.waitForMenuButton()).toBeDisplayed();
+        expect(HomeScreen.menuBtn).toBeDisplayed();
     });
 
     it(`should be able to add an item into the cart`, async function() {
-        await HomeScreen.menuBtn.click();
-        await HomeScreen.allItems.click();
-        await HomeScreen.filterIcon.click();
-        await HomeScreen.sortByAtoZ.click();
+        await HomeScreen.clickOnMenuBtn();
+        await HomeScreen.clickOnAllItems();
+        await HomeScreen.clickOnFilterIcon();
+        await HomeScreen.clickOnSortA2Z();
+
+        await HomeScreen.sauceLabsBikeLight.waitForClickable({
+            timeout: CONSTANTS.SHORT_TIMEOUT,
+            interval: CONSTANTS.SHORT_POLL,
+            timeoutMsg: `${HomeScreen.sauceLabsBikeLight} is not clickable under ${CONSTANTS.SHORT_TIMEOUT}`
+        });
+
         await HomeScreen.sauceLabsBikeLight.click();
 
         await Gestures.checkIfDisplayedWithSwipe({
@@ -41,11 +48,11 @@ describe('Login into saucelabs app, select item and complete checkout', () => {
     });
 
     it(`should be able to see the added item in the cart page, check the price, and continue to checkout`, async function() {
-        expect(await CartScreen.sauceLabsBikeLightItem("Sauce Labs Bike Light")).toBeDisplayed();
-        expect(await CartScreen.textPrice.getText()).toEqual(price);
+        expect(await CartScreen.sauceLabsBikeLightItem(testData.SauceLabsItem)).toBeDisplayed();
+        expect(await CartScreen.textPrice.getText()).toEqual(testData.CartPrice);
 
         await Gestures.checkIfDisplayedWithSwipe({
-            scrollContainer: await CartScreen.sauceLabsBikeLightItem("Sauce Labs Bike Light"),
+            scrollContainer: await CartScreen.sauceLabsBikeLightItem(testData.SauceLabsItem),
             searchableElement: await CartScreen.checkout,
             maxScrolls: 5,
             direction: DIRECTIONS.UP,
@@ -57,9 +64,11 @@ describe('Login into saucelabs app, select item and complete checkout', () => {
     });
 
     it(`should be able to enter details, checkout, and verify`, async function() {
-        await CheckoutScreen.checkoutFirstName.setValue("Sri");
-        await CheckoutScreen.checkoutLastName.setValue("harsha");
-        await CheckoutScreen.checkoutZipCode.setValue("50085");
+        // wait for shown and throw error if not found
+        await CheckoutScreen.waitForIsShown(true);
+        await CheckoutScreen.checkoutFirstName.setValue(testData.CheckOutFirstName);
+        await CheckoutScreen.checkoutLastName.setValue(testData.CheckoutLastName);
+        await CheckoutScreen.checkoutZipCode.setValue(testData.CheckoutZipCode);
         if (await driver.isKeyboardShown()) {
             await CheckoutScreen.checkoutFirstName.click();
         }
